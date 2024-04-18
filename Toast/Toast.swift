@@ -449,14 +449,14 @@ public extension UIView {
         if let image = image {
             imageView = UIImageView(image: image)
             imageView?.contentMode = .scaleAspectFit
-            imageView?.frame = CGRect(x: style.horizontalPadding, y: style.verticalPadding, width: style.imageSize.width, height: style.imageSize.height)
+            imageView?.frame = CGRect(x: style.horizontalPadding, y: style.verticalSpacing, width: style.imageSize.width, height: style.imageSize.height)
         }
         
         var imageRect = CGRect.zero
         
         if let imageView = imageView {
             imageRect.origin.x = style.horizontalPadding
-            imageRect.origin.y = style.verticalPadding
+            imageRect.origin.y = style.verticalSpacing
             imageRect.size.width = imageView.bounds.size.width
             imageRect.size.height = imageView.bounds.size.height
         }
@@ -501,7 +501,7 @@ public extension UIView {
         
         if let titleLabel = titleLabel {
             titleRect.origin.x = imageRect.origin.x + imageRect.size.width + style.horizontalPadding
-            titleRect.origin.y = style.verticalPadding
+            titleRect.origin.y = style.verticalSpacing
             titleRect.size.width = titleLabel.bounds.size.width
             titleRect.size.height = titleLabel.bounds.size.height
         }
@@ -510,7 +510,7 @@ public extension UIView {
         
         if let messageLabel = messageLabel {
             messageRect.origin.x = imageRect.origin.x + imageRect.size.width + style.horizontalPadding
-            messageRect.origin.y = titleRect.origin.y + titleRect.size.height + style.verticalPadding
+            messageRect.origin.y = titleRect.origin.y + titleRect.size.height + style.verticalSpacing
             messageRect.size.width = messageLabel.bounds.size.width
             messageRect.size.height = messageLabel.bounds.size.height
         }
@@ -605,13 +605,18 @@ public struct ToastStyle {
     public var horizontalPadding: CGFloat = 10.0
     
     /**
+     Top padding to the application.
+    */
+    public var verticalPadding: CGFloat = 10.0
+
+    /**
      The spacing from the vertical edge of the toast view to the content. When a title
      is present, this is also used as the padding between the title and the message.
      Default is 10.0. On iOS11+, this value is added added to the `safeAreaInset.top`
      and `safeAreaInsets.bottom`.
     */
-    public var verticalPadding: CGFloat = 10.0
-    
+    public var verticalSpacing: CGFloat = 10.0
+
     /**
      The corner radius. Default is 10.0.
     */
@@ -768,9 +773,9 @@ public enum ToastPosition {
     case bottom
     
     fileprivate func centerPoint(forToast toast: UIView, inSuperview superview: UIView) -> CGPoint {
-        let topPadding: CGFloat = ToastManager.shared.style.verticalPadding + superview.csSafeAreaInsets.top
-        let bottomPadding: CGFloat = ToastManager.shared.style.verticalPadding + superview.csSafeAreaInsets.bottom
-        
+        let topPadding: CGFloat = ToastManager.shared.style.verticalSpacing + superview.csSafeAreaInsets.top
+        let bottomPadding: CGFloat = ToastManager.shared.style.verticalSpacing + superview.csSafeAreaInsets.bottom
+
         switch self {
         case .top:
             return CGPoint(x: superview.bounds.size.width / 2.0, y: (toast.frame.size.height / 2.0) + topPadding)
