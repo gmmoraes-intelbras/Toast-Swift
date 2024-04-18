@@ -168,13 +168,14 @@ extension ViewController {
              self.navigationController?.view.makeToast("This is a piece of toast")
         case 1:
             // Make toast with a duration and position
-            self.navigationController?.view.makeToast("This is a piece of toast on top for 3 seconds", duration: 3.0, position: .top)
+            //self.navigationController?.view.makeToast("3 seconds", duration: 3.0, position: .top)
+            self.navigationController?.view.makeToast("Codigo copiado!", duration: 1.0, position: .top)
         case 2:
             // Make toast with a title
             self.navigationController?.view.makeToast("This is a piece of toast with a title", duration: 2.0, position: .top, title: "Toast Title", image: nil)
         case 3:
             // Make toast with an image
-            self.navigationController?.view.makeToast("This is a piece of toast with an image", duration: 2.0, position: .center, title: nil, image: UIImage(named: "toast.png"))
+            self.navigationController?.view.makeToast("This is a piece of toast with an image", duration: 2.0, position: .top, title: nil, image: UIImage(named: "toast.png"))
         case 4:
             // Make toast with an image, title, and completion closure
             self.navigationController?.view.makeToast("This is a piece of toast with a title, image, and completion closure", duration: 2.0, position: .bottom, title: "Toast Title", image: UIImage(named: "toast.png")) { didTap in
