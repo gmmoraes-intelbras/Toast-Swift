@@ -107,6 +107,7 @@ public extension UIView {
             didTap will be `true` if the toast view was dismissed from a tap.
      */
     func makeToast(_ message: String?, duration: TimeInterval = ToastManager.shared.duration, position: ToastPosition = ToastManager.shared.position, title: String? = nil, image: UIImage? = nil, style: ToastStyle = ToastManager.shared.style, completion: ((_ didTap: Bool) -> Void)? = nil) {
+        ToastManager.shared.style.verticalSpacing = style.verticalSpacing
         do {
             let toast = try toastViewForMessage(message, title: title, image: image, style: style)
             showToast(toast, duration: duration, position: position, completion: completion)
@@ -559,8 +560,14 @@ public extension UIView {
 */
 public struct ToastStyle {
 
-    public init() {}
-    
+    public init(verticalSpacing: CGFloat) {
+        self.verticalSpacing = verticalSpacing
+    }
+
+    public init() {
+        self.verticalSpacing = 10
+    }
+
     /**
      The background color. Default is `.black` at 80% opacity.
     */
@@ -615,7 +622,7 @@ public struct ToastStyle {
      Default is 10.0. On iOS11+, this value is added added to the `safeAreaInset.top`
      and `safeAreaInsets.bottom`.
     */
-    public var verticalSpacing: CGFloat = 10
+    public var verticalSpacing: CGFloat
 
     /**
      The corner radius. Default is 10.0.
