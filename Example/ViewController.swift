@@ -170,7 +170,24 @@ extension ViewController {
             // Make toast with a duration and position
             //self.navigationController?.view.makeToast("3 seconds", duration: 3.0, position: .top)
             let style = ToastStyle()
-            self.navigationController?.view.makeToast("Codigo copiado!", duration: 1.0, position: .top, style: style)
+            //self.navigationController?.view.makeToast( "Codigo copiado!", duration: 1.0, position: .top, style: style)
+
+            let backgroundColor = UIColor.gray
+            let textColor = UIColor.black
+            let image = UIImage(named: "ic_confirma_copia")
+            let messageFont = UIFont.boldSystemFont(ofSize: 11)
+            INToast.start(
+                state: .custom(textColor: textColor, backgroundColor: backgroundColor),
+                msg: "Codigo copiado!",
+                viewToDisplay: self.navigationController?.view ?? UIView(),
+                image: image,
+                imageSize: CGSize(width: 20, height: 20),
+                position: .top,
+                horizontalPadding: 15,
+                verticalPadding: 10,
+                verticalSpacing: 0,
+                messageFont: messageFont
+            )
         case 2:
             // Make toast with a title
             self.navigationController?.view.makeToast("This is a piece of toast with a title", duration: 2.0, position: .top, title: "Toast Title", image: nil)
@@ -225,4 +242,46 @@ extension ViewController {
             break
         }
     }
+}
+
+enum INToastState {
+    case error
+    case warning
+    case succes
+    case custom(textColor: UIColor, backgroundColor: UIColor)
+}
+
+final class INToast {
+
+    static func start(state: INToastState, msg: String, viewToDisplay: UIView, image: UIImage? = nil, imageSize: CGSize? = nil, position: ToastPosition = .bottom, horizontalPadding: CGFloat = 50, verticalPadding: CGFloat = 10, verticalSpacing: CGFloat = 10, messageFont: UIFont? = nil) {
+        var style = ToastStyle(verticalSpacing: verticalSpacing)
+        switch state {
+        case .custom(textColor: let textColor, backgroundColor: let backgroundColor):
+            style.backgroundColor = backgroundColor
+            style.messageColor = textColor
+
+            if let imageSize = imageSize {
+                style.imageSize = imageSize
+            }
+
+            if let messageFont = messageFont {
+                style.messageFont = messageFont
+            }
+
+        default:
+            break
+
+        }
+
+        style.horizontalPadding = horizontalPadding
+        style.verticalPadding = verticalPadding
+        style.maxHeightPercentage = 1
+        style.customHeight = 20
+
+
+        viewToDisplay.makeToast(msg, duration: 1.0, position: position, image: image, style: style)
+    }
+
+
+
 }
