@@ -493,7 +493,7 @@ public extension UIView {
             let messageSize = messageLabel?.sizeThatFits(maxMessageSize)
             if let messageSize = messageSize {
                 let actualWidth = min(messageSize.width, maxMessageSize.width)
-                let actualHeight = min(messageSize.height, maxMessageSize.height)
+                let actualHeight = style.customHeight ?? min(messageSize.height, maxMessageSize.height)
                 messageLabel?.frame = CGRect(x: 0.0, y: 0.0, width: actualWidth, height: actualHeight)
             }
         }
@@ -602,7 +602,9 @@ public struct ToastStyle {
             maxHeightPercentage = max(min(maxHeightPercentage, 1.0), 0.0)
         }
     }
-    
+
+    public var customHeight: CGFloat?
+
     /**
      The spacing from the horizontal edge of the toast view to the content. When an image
      is present, this is also used as the padding between the image and the text.
